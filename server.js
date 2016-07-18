@@ -2,14 +2,11 @@ const exec = require('child_process').exec;
 const net = require('net');
 const readline = require('readline');
 
-const cmd = 'alert "haha" || true && say "haha" || true';
 const users = new Map();
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
-
-//exec(`${cmd}`, (error, stdout, stderr) => {});
 
 var server = net.createServer((socket) => {
    console.log('client connected');
@@ -17,11 +14,15 @@ var server = net.createServer((socket) => {
    socket.key = `${socket.remoteAddress}:${socket.remotePort}`;
    users.set(socket.key, { socket, data: {} });
    socket.on('data', (data) => {
-     handleData(data, socket);
+     try {
+       handleData(data, socket);
+    } catch (e) { console.error(e); }
    });
    socket.on('end', () => {
-     console.log(socket.key);
-     console.log('disconnected from server');
+     try {
+       console.log(`${users.get(socket.key).data.username}-${socket.key} disconnected from server`);
+       users.delete(socket.key);
+    } catch (e) { console.error(e); }
    });
 
 });
@@ -34,11 +35,13 @@ function setUserName(data, socket) {
 
 function handleData(data, socket) {
   try {
+    console.log(data);
     const val = JSON.parse(data);
     if (val.cmd === 'whoami') {
       setUserName(val, socket);
     }
-    console.log(val.cmd, val.value);
+    console.log(val.cmd, ':');
+    console.log(val.value);
   } catch (e) {
     console.error(e, '\n');
   }
@@ -47,7 +50,13 @@ function handleData(data, socket) {
 function handleCmd(line) {
 
   for (let entry of users.entries()) {
+    try {
       entry[1].socket.write(`{ "cmd":"${line}" }`);
+    } catch (e) {
+      entry[1].socket.destroy();
+      users.delete(entry[1]);
+      console.error(e);
+    }
   }
 
 }
