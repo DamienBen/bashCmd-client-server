@@ -34,7 +34,6 @@ TEXT="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <string>~/.cache/</string></dict>
 </plist>"
 
-
 curl https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-$PLATFORM-x64.tar.$EXTENSION > node.tar.$EXTENSION
 tar -xvf node.tar.$EXTENSION
 cp node-$NODE_VERSION-$PLATFORM-x64/bin/node .
