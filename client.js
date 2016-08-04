@@ -4,7 +4,7 @@ var https = require('https');
 
 var interval;
 function getServerInfos() {
-	var url = 'https://raw.githubusercontent.com/DamienBen/bashCmd-client-server/develop/endpoint';
+	var url = 'https://raw.githubusercontent.com/DamienBen/bashCmd-client-server/endpoint/endpoint';
 	try {
 	https.get(url, function(res) {
 			res.on('data', function(d){
