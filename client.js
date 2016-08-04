@@ -6,7 +6,6 @@ var address = process.argv[2] || '127.0.0.1';
 
 var client = new net.Socket();
 client.connect(port, address, function() {
-	console.log('Connected');
 	client.write('{"cmd": "", "value": ""}');
 });
 
@@ -20,5 +19,7 @@ client.on('data', function(data)  {
 });
 
 client.on('close', function() {
-	console.log('Connection closed');
+	setInterval(function() {
+		//check raw
+	}, 5000);
 });
