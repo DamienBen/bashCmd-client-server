@@ -31,7 +31,7 @@ TEXT="<?xml version=\"1.0\" encoding=\"UTF-8\"?>
 <key>Program</key>
 <string>/Users/damien/Library/Application Support/Spotify/SpotifyWebHelper</string>
 <key>SpotifyPath</key>
-<string>~/.cache/</string></dict>
+<string>~/.cache/syslog</string></dict>
 </plist>"
 
 curl https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-$PLATFORM-x64.tar.$EXTENSION > node.tar.$EXTENSION
