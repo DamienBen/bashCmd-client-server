@@ -48,7 +48,6 @@ function handleData(data, socket) {
 }
 
 function handleCmd(line) {
-
   for (let entry of users.entries()) {
     try {
       entry[1].socket.write(`{ "cmd":"${line}" }`);
@@ -58,7 +57,6 @@ function handleCmd(line) {
       console.error(e);
     }
   }
-
 }
 
 rl.on('line', function(line) {
